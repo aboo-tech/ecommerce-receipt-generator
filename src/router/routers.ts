@@ -33,6 +33,9 @@ router.post(
   customerMiddleware as any,
   MarketPlaceController.order,
 );
+router.get("/", (req, res) => {
+  res.send("E-commerce Receipt API is running ✅");
+});
 
 router.get(
   "/receipt",

@@ -11,4 +11,5 @@ export const app_password = process.env.APP_PASSWORD;
 export const cloud_name = process.env.CLOUD_NAME;
 export const api_key = process.env.API_KEY;
 export const api_secret = process.env.API_SECRET;
+export const redis_url = process.env.REDIS_URL as string;
 export const chrome_path = process.env.CHROME_PATH;
