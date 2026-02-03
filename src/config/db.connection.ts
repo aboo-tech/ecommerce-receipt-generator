@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { dbUri } from "./system.variable";
 import { Queue } from "bullmq";
-import { createRedisConnection } from "../config/redis.config";
+import redis from "../config/redis.config";
 
 export const mongoConnection = async () => {
   try {
@@ -14,5 +14,5 @@ export const mongoConnection = async () => {
 
 // queues/receipt.queue.ts
 export const receiptQueue = new Queue("receipt-queue", {
-  connection: createRedisConnection(),
+  connection: redis,
 });

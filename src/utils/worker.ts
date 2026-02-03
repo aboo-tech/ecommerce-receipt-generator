@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 import { Worker } from "bullmq";
 // import {fetch} from 'node:fetch'
-import { createRedisConnection } from "../config/redis.config";
+import redis from "../config/redis.config";
 import { pdfFileNew } from "./pdfBuffer";
 import { uploadCloudinary } from "./cloudinary";
 import { orderModel } from "../models/order.model";
@@ -107,7 +107,7 @@ const worker = new Worker(
     });
   },
   {
-    connection: createRedisConnection(),
+    connection: redis,
   },
 );
 
