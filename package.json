@@ -5,9 +5,9 @@
   "scripts": {
     "build": "tsc",
     "start": "cross-env NODE_ENV=production node dist/app.js",
-    "workeer": "cross-env NODE_ENV=poduction node dist/utils/worker.js",
+    "worker": "cross-env NODE_ENV=production node dist/utils/worker.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/app.ts",
-    "worker": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/utils/worker.ts"
+    "worker:dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/utils/worker.ts"
   },
   "author": "aboo-tech",
   "license": "ISC",
@@ -19,12 +19,12 @@
     "@types/mongoose": "^5.11.96",
     "@types/node": "^25.0.9",
     "@types/nodemailer": "^7.0.5",
-    "bcrypt": "^6.0.0",
     "cross-env": "^10.1.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bullmq": "^5.67.1",
     "cloudinary": "^2.9.0",
     "dotenv": "^17.2.3",
