@@ -1,7 +1,8 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import fs from "fs";
 import path from "path";
 import handlebars from "handlebars";
+import { chrome_path } from "../config/system.variable";
 
 type Address = {
   label?: string | null;
@@ -86,11 +87,12 @@ export const pdfFileNew = async ({
     storePhoneNumber,
     storeAddress: formatAddress(storeAddress),
   });
-
+  const isProduction = process.env.NODE_DEV === "production";
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath:
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    executablePath: isProduction
+      ? chrome_path
+      : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",

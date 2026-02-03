@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.chrome_path = exports.api_secret = exports.api_key = exports.cloud_name = exports.app_password = exports.redis_port = exports.redis_host = exports.admin_jwt_secret = exports.jwt_exp = exports.jwt_secret = exports.admin_email = exports.mongo_db_uri = exports.dbUri = exports.PORT = void 0;
+exports.PORT = process.env.PORT;
+exports.dbUri = process.env.DB_CONNECTION_URI;
+exports.mongo_db_uri = process.env.MONGO_DB_URI;
+exports.admin_email = process.env.ADMIN_EMAIL;
+exports.jwt_secret = process.env.JWT_SECRET;
+exports.jwt_exp = process.env.JWT_EXP;
+exports.admin_jwt_secret = process.env.ADMIN_JWT_SECRET;
+exports.redis_host = process.env.REDIS_HOST;
+exports.redis_port = process.env.REDIS_PORT;
+exports.app_password = process.env.APP_PASSWORD;
+exports.cloud_name = process.env.CLOUD_NAME;
+exports.api_key = process.env.API_KEY;
+exports.api_secret = process.env.API_SECRET;
+exports.chrome_path = process.env.CHROME_PATH;
