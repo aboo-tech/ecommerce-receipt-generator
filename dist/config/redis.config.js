@@ -7,9 +7,7 @@ exports.createRedisConnection = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
 const system_variable_1 = require("./system.variable");
 const createRedisConnection = () => {
-    return new ioredis_1.default({
-        host: system_variable_1.redis_host,
-        port: system_variable_1.redis_port,
+    return new ioredis_1.default(system_variable_1.redis_url, {
         maxRetriesPerRequest: null, //
     });
 };

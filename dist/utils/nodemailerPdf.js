@@ -38,7 +38,7 @@ const formatAddress = (address) => {
 const sendPdf = (data, attachmentBuffer) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f;
     try {
-        const sender = "thetechbrocode@gmail.com";
+        const sender = system_variable_1.admin_email;
         const transporter = nodemailer_1.default.createTransport({
             host: sender,
             //   port: 587,
