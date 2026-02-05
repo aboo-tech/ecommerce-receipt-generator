@@ -16,7 +16,7 @@ import { sendPdf } from "./nodemailerPdf";
 import { redis } from "../config/redis.config";
 import express, { Request, Response } from "express";
 
-// mongoose.connect(process.env.MONGO_DB_URI as string);
+mongoose.connect(process.env.MONGO_DB_URI as string);
 
 const worker = new Worker(
   "receipt-queue",
