@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
 import { dbUri } from "./system.variable";
 import { Queue } from "bullmq";
-import redis from "../config/redis.config";
+import { redis } from "../config/redis.config";
 
 export const mongoConnection = async () => {
   try {
-    await mongoose.connect(`${dbUri}`);
+    await mongoose.connect(`${dbUri}`, {
+      serverSelectionTimeoutMS: 30000,
+    });
     console.log("Database connected");
   } catch (error) {
     console.log("Database disconnected");
+    process.exit(1);
   }
 };
 

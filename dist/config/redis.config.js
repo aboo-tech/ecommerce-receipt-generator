@@ -3,12 +3,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRedisConnection = void 0;
+exports.redis = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config({ quiet: true });
 const ioredis_1 = __importDefault(require("ioredis"));
-const system_variable_1 = require("./system.variable");
-const createRedisConnection = () => {
-    return new ioredis_1.default(system_variable_1.redis_url, {
-        maxRetriesPerRequest: null, //
-    });
-};
-exports.createRedisConnection = createRedisConnection;
+// export const createRedisConnection = () => {
+//   return new IORedis(redis_url, {
+//     maxRetriesPerRequest: null, //
+//   });
+// };
+exports.redis = new ioredis_1.default(process.env.REDIS_URL, {
+    maxRetriesPerRequest: null,
+    enableReadyCheck: false,
+    retryStrategy(times) {
+        return Math.min(times * 100, 3000);
+    },
+});
+exports.redis.on("connect", () => console.log("Redis connected"));
+exports.redis.on("error", (err) => console.error("Redis error", err));
+exports.redis.on("close", () => console.log("Redis connection closed"));
+// export default redis;

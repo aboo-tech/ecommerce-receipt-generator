@@ -17,7 +17,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ quiet: true });
 const bullmq_1 = require("bullmq");
 // import {fetch} from 'node:fetch'
-const redis_config_1 = require("../config/redis.config");
 const pdfBuffer_1 = require("./pdfBuffer");
 const cloudinary_1 = require("./cloudinary");
 const order_model_1 = require("../models/order.model");
@@ -29,7 +28,8 @@ const cart_model_1 = require("../models/cart.model");
 const user_model_1 = require("../models/user.model");
 const product_model_1 = require("../models/product.model");
 const nodemailerPdf_1 = require("./nodemailerPdf");
-mongoose_1.default.connect(process.env.MONGO_DB_URI);
+const redis_config_1 = require("../config/redis.config");
+// mongoose.connect(process.env.MONGO_DB_URI as string);
 const worker = new bullmq_1.Worker("receipt-queue", (job) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
     const { orderId } = job.data;
@@ -110,7 +110,7 @@ const worker = new bullmq_1.Worker("receipt-queue", (job) => __awaiter(void 0, v
         pdfUrl: pdfUrl,
     });
 }), {
-    connection: (0, redis_config_1.createRedisConnection)(),
+    connection: redis_config_1.redis,
 });
 worker.on("completed", (job) => {
     console.log(`Receipt generated for order ${job.data.orderId}`);

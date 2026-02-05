@@ -19,15 +19,18 @@ const bullmq_1 = require("bullmq");
 const redis_config_1 = require("../config/redis.config");
 const mongoConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(`${system_variable_1.dbUri}`);
+        yield mongoose_1.default.connect(`${system_variable_1.dbUri}`, {
+            serverSelectionTimeoutMS: 30000,
+        });
         console.log("Database connected");
     }
     catch (error) {
         console.log("Database disconnected");
+        process.exit(1);
     }
 });
 exports.mongoConnection = mongoConnection;
 // queues/receipt.queue.ts
 exports.receiptQueue = new bullmq_1.Queue("receipt-queue", {
-    connection: (0, redis_config_1.createRedisConnection)(),
+    connection: redis_config_1.redis,
 });

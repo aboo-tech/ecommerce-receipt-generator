@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 import { Worker } from "bullmq";
 // import {fetch} from 'node:fetch'
-import redis from "../config/redis.config";
+
 import { pdfFileNew } from "./pdfBuffer";
 import { uploadCloudinary } from "./cloudinary";
 import { orderModel } from "../models/order.model";
@@ -15,8 +15,9 @@ import { cartModel } from "../models/cart.model";
 import { userModel } from "../models/user.model";
 import { productModel } from "../models/product.model";
 import { sendPdf } from "./nodemailerPdf";
+import { redis } from "../config/redis.config";
 
-mongoose.connect(process.env.MONGO_DB_URI as string);
+// mongoose.connect(process.env.MONGO_DB_URI as string);
 
 const worker = new Worker(
   "receipt-queue",
