@@ -2,8 +2,6 @@
 import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 import { Worker } from "bullmq";
-// import {fetch} from 'node:fetch'
-
 import { pdfFileNew } from "./pdfBuffer";
 import { uploadCloudinary } from "./cloudinary";
 import { orderModel } from "../models/order.model";
@@ -16,6 +14,7 @@ import { userModel } from "../models/user.model";
 import { productModel } from "../models/product.model";
 import { sendPdf } from "./nodemailerPdf";
 import { redis } from "../config/redis.config";
+import express, { Request, Response } from "express";
 
 // mongoose.connect(process.env.MONGO_DB_URI as string);
 
@@ -118,4 +117,16 @@ worker.on("completed", (job) => {
 
 worker.on("failed", (job, err) => {
   console.error("Receipt failed for order", err);
+});
+
+// Dummy HTTP server for Render port detection
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (_: Request, res: Response) => {
+  res.send("Worker is running");
+});
+
+app.listen(PORT, () => {
+  console.log(`🌐 Worker dummy server listening on ${PORT}`);
 });

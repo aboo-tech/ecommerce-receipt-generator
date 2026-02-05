@@ -16,7 +16,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ quiet: true });
 const bullmq_1 = require("bullmq");
-// import {fetch} from 'node:fetch'
 const pdfBuffer_1 = require("./pdfBuffer");
 const cloudinary_1 = require("./cloudinary");
 const order_model_1 = require("../models/order.model");
@@ -29,6 +28,7 @@ const user_model_1 = require("../models/user.model");
 const product_model_1 = require("../models/product.model");
 const nodemailerPdf_1 = require("./nodemailerPdf");
 const redis_config_1 = require("../config/redis.config");
+const express_1 = __importDefault(require("express"));
 // mongoose.connect(process.env.MONGO_DB_URI as string);
 const worker = new bullmq_1.Worker("receipt-queue", (job) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
@@ -117,4 +117,13 @@ worker.on("completed", (job) => {
 });
 worker.on("failed", (job, err) => {
     console.error("Receipt failed for order", err);
+});
+// Dummy HTTP server for Render port detection
+const app = (0, express_1.default)();
+const PORT = process.env.PORT || 3000;
+app.get("/", (_, res) => {
+    res.send("Worker is running");
+});
+app.listen(PORT, () => {
+    console.log(`🌐 Worker dummy server listening on ${PORT}`);
 });
