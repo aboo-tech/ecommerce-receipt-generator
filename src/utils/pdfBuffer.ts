@@ -92,7 +92,7 @@ export const pdfFileNew = async ({
     executablePath:
       process.platform === "win32"
         ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-        : "/usr/bin/chromium-browser",
+        : "/usr/bin/chromium",
     headless: true,
     args: [
       "--no-sandbox",
