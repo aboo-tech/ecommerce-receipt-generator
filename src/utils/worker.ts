@@ -1,4 +1,3 @@
-// workers/receipt.worker.ts
 import dotenv from "dotenv";
 dotenv.config({ quiet: true });
 import { Worker } from "bullmq";
@@ -121,7 +120,7 @@ worker.on("failed", (job, err) => {
 
 // Dummy HTTP server for Render port detection
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.get("/", (_: Request, res: Response) => {
   res.send("Worker is running");
