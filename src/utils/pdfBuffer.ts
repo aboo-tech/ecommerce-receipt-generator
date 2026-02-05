@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
 import handlebars from "handlebars";
@@ -89,8 +89,11 @@ export const pdfFileNew = async ({
   });
   // const isProduction = process.env.NODE_DEV === "production";
   const browser = await puppeteer.launch({
+    executablePath:
+      process.platform === "win32"
+        ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+        : "/usr/bin/chromium-browser",
     headless: true,
-    executablePath: "/usr/bin/chromium-browser",
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
@@ -103,7 +106,7 @@ export const pdfFileNew = async ({
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
   //path
-  //    : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  //    : ,
   const pdfUnitArray = await page.pdf({
     format: "A4",
     printBackground: true,
