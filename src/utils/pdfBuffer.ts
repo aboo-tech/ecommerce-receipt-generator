@@ -2,7 +2,7 @@ import puppeteer from "puppeteer-core";
 import fs from "fs";
 import path from "path";
 import handlebars from "handlebars";
-import { chrome_path } from "../config/system.variable";
+// import { chrome_path } from "../config/system.variable";
 
 type Address = {
   label?: string | null;
@@ -87,12 +87,10 @@ export const pdfFileNew = async ({
     storePhoneNumber,
     storeAddress: formatAddress(storeAddress),
   });
-  const isProduction = process.env.NODE_DEV === "production";
+  // const isProduction = process.env.NODE_DEV === "production";
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: isProduction
-      ? chrome_path
-      : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    executablePath: "/usr/bin/chromium-browser",
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
@@ -104,7 +102,8 @@ export const pdfFileNew = async ({
 
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
-
+  //path
+  //    : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
   const pdfUnitArray = await page.pdf({
     format: "A4",
     printBackground: true,
