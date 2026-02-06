@@ -99,14 +99,14 @@ export const pdfFileNew = async ({
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
       "--disable-gpu",
+      "--single-process",
     ],
     timeout: 0,
   });
 
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
-  //path
-  //    : ,
+  await page.close();
   const pdfUnitArray = await page.pdf({
     format: "A4",
     printBackground: true,
