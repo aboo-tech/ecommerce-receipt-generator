@@ -21,7 +21,7 @@ import express, { Request, Response } from "express";
 mongoose.set("bufferCommands", false);
 const startWorker = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_DB_URI as string, {
+    await mongoose.connect(process.env.DB_CONNECTION_URI as string, {
       serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 45000,
     });
