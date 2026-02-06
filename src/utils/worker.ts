@@ -135,3 +135,15 @@ const startWorker = async () => {
 };
 
 startWorker();
+const app = express();
+
+// ---- Render requires a port binding ----
+const PORT = Number(process.env.PORT);
+
+app.get("/", (_req: Request, res: Response) => {
+  res.send("Worker running");
+});
+
+app.listen(PORT, () => {
+  console.log(`🌐 Worker dummy server listening on ${PORT}`);
+});

@@ -27,6 +27,7 @@ const user_model_1 = require("../models/user.model");
 const product_model_1 = require("../models/product.model");
 const nodemailerPdf_1 = require("./nodemailerPdf");
 const redis_config_1 = require("../config/redis.config");
+const express_1 = __importDefault(require("express"));
 // mongoose.connect(process.env.MONGO_DB_URI as string);
 //production
 mongoose_1.default.set("bufferCommands", false);
@@ -132,3 +133,12 @@ const startWorker = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 startWorker();
+const app = (0, express_1.default)();
+// ---- Render requires a port binding ----
+const PORT = Number(process.env.PORT);
+app.get("/", (_req, res) => {
+    res.send("Worker running");
+});
+app.listen(PORT, () => {
+    console.log(`🌐 Worker dummy server listening on ${PORT}`);
+});
