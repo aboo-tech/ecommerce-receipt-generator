@@ -87,7 +87,7 @@ export const pdfFileNew = async ({
     storePhoneNumber,
     storeAddress: formatAddress(storeAddress),
   });
-  const isProduction = process.env.NODE_DEV === "production";
+  const isProduction = process.env.NODE_ENV === "production";
   const browser = await puppeteer.launch({
     headless: true,
     executablePath: isProduction
