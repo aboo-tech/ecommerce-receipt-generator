@@ -87,9 +87,12 @@ export const pdfFileNew = async ({
     storePhoneNumber,
     storeAddress: formatAddress(storeAddress),
   });
-  // const isProduction = process.env.NODE_DEV === "production";
+  const isProduction = process.env.NODE_DEV === "production";
   const browser = await puppeteer.launch({
     headless: true,
+    executablePath: isProduction
+      ? process.env.PUPPETEER_EXECUTABLE_PATH
+      : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
     // executablePath:
     //   process.platform === "win32"
     //     ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
@@ -106,7 +109,6 @@ export const pdfFileNew = async ({
 
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
-  await page.close();
   const pdfUnitArray = await page.pdf({
     format: "A4",
     printBackground: true,
@@ -114,6 +116,7 @@ export const pdfFileNew = async ({
   });
 
   const pdfBuffer = Buffer.from(pdfUnitArray);
+  await page.close();
   await browser.close();
 
   return pdfBuffer;
