@@ -13,11 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pdfFileNew = void 0;
-const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
+const puppeteer_1 = __importDefault(require("puppeteer"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const handlebars_1 = __importDefault(require("handlebars"));
-const system_variable_1 = require("../config/system.variable");
 const formatAddress = (address) => {
     var _a, _b, _c, _d;
     if (!address)
@@ -52,12 +51,13 @@ const pdfFileNew = (_a) => __awaiter(void 0, [_a], void 0, function* ({ receiptN
         storePhoneNumber,
         storeAddress: formatAddress(storeAddress),
     });
-    const isProduction = process.env.NODE_DEV === "production";
-    const browser = yield puppeteer_core_1.default.launch({
+    // const isProduction = process.env.NODE_DEV === "production";
+    const browser = yield puppeteer_1.default.launch({
+        // executablePath:
+        //   process.platform === "win32"
+        //     ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+        //     : "/usr/bin/chromium",
         headless: true,
-        executablePath: isProduction
-            ? system_variable_1.chrome_path
-            : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
@@ -68,6 +68,8 @@ const pdfFileNew = (_a) => __awaiter(void 0, [_a], void 0, function* ({ receiptN
     });
     const page = yield browser.newPage();
     yield page.setContent(html, { waitUntil: "networkidle0" });
+    //path
+    //    : ,
     const pdfUnitArray = yield page.pdf({
         format: "A4",
         printBackground: true,

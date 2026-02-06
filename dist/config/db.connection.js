@@ -17,15 +17,25 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const system_variable_1 = require("./system.variable");
 const bullmq_1 = require("bullmq");
 const redis_config_1 = require("../config/redis.config");
+mongoose_1.default.connection.on("connecting", () => {
+    console.log("🟡 Connecting to MongoDB...");
+});
+mongoose_1.default.connection.on("connected", () => {
+    console.log("🟢 MongoDB connected");
+});
+mongoose_1.default.connection.on("error", (err) => {
+    console.error("🔴 MongoDB connection error:", err);
+});
 const mongoConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(`${system_variable_1.dbUri}`, {
             serverSelectionTimeoutMS: 30000,
+            socketTimeoutMS: 45000,
         });
         console.log("Database connected");
     }
     catch (error) {
-        console.log("Database disconnected");
+        console.log("Database disconnected,", error);
         process.exit(1);
     }
 });

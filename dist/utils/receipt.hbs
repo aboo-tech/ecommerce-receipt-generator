@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Inter, Arial, sans-serif;
+      padding: 40px;
+      color: #222;
+
+    }
+.header{
+  background:linear-gradient(to right,#2e865f,#0a6849);
+  
+  padding: 40px;
+  color: white;
+  font-size: 66px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+    .section-head {
+      border-bottom: 2px solid #000;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .store-name {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 20px;
+    }
+
+    th {
+      background: #f3f3f3;
+      text-align: left;
+    }
+
+    td.num {
+      text-align: right;
+    }
+
+    .total {
+      margin-top: 22px;
+      text-align: right;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 35px;
+      font-size: 20px;
+      padding: 10px;
+      text-align: center;
+      background-color: #0a6849;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+  RECEIPT
+  </div>
+  <div class="section-head">
+    <div>
+      <div class="store-name">{{storeName}}</div>
+      <div>{{{storeAddress}}}</div>
+      <div>{{storePhoneNumber}}</div>
+      <div>Email: {{storeEmail}}</div>
+    </div>
+
+    <div>
+      <div class="receipt"><strong>RECEIPT</strong></div>
+      Receipt No: {{receiptNo}}<br />
+      Date: {{orderDate}}<br />
+      Order ID: {{orderCode}}
+    </div>
+  </div>
+
+  <div class="section">
+    <strong>Bill To:</strong><br />
+    {{customerName}}<br />
+    {{{customerAddress}}}<br />
+    {{email}}
+  </div>
+
+  <table>
+    <tr>
+      <th>Itm</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+    {{#each items}}
+    <tr>
+      <td>{{productName}}</td>
+      <td class="num">{{quantity}}</td>
+      <td class="num">₦{{price}}</td>
+      <td class="num">₦{{lineTotal}}</td>
+    </tr>
+    {{/each}}
+  </table>
+
+  <br class="total">
+    Total Paid: ₦{{totalAmount}}<br/>
+    Payment Method: {{paymentMethod}}
+  </div>
+
+  <div class="footer">
+    Thanks for your patronage!
+  </div>
+
+</body>
+</html>
+
