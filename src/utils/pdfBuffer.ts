@@ -89,11 +89,12 @@ export const pdfFileNew = async ({
   });
   // const isProduction = process.env.NODE_DEV === "production";
   const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
     // executablePath:
     //   process.platform === "win32"
     //     ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
     //     : "/usr/bin/chromium",
-    headless: true,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
