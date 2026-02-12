@@ -94,8 +94,11 @@ export const pdfFileNew = async ({
     headless: true,
     ...(isProduction
       ? {}
-      : { executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",})
-  
+      : {
+          executablePath:
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        }),
+
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
