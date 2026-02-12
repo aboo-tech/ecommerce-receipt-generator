@@ -37,6 +37,6 @@ export const uploadCloudinary = async (
     return result.secure_url;
   } catch (error) {
     console.error("Cloudinary upload failed:", error);
-    throw error; // 👈 THIS fixes the T
+    throw error; 
   }
 };

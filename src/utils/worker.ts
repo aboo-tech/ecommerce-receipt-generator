@@ -138,7 +138,7 @@ startWorker();
 const app = express();
 
 // ---- Render requires a port binding ----
-const PORT = process.env.WORKER_PORT;
+const PORT = Number(process.env.WORKER_PORT);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Worker running");

@@ -1,4 +1,6 @@
 import puppeteer from "puppeteer";
+import os from "os";
+
 import fs from "fs";
 import path from "path";
 import handlebars from "handlebars";
@@ -90,13 +92,10 @@ export const pdfFileNew = async ({
   const isProduction = process.env.NODE_ENV === "production";
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: isProduction
-      ? process.env.PUPPETEER_EXECUTABLE_PATH
-      : "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-    // executablePath:
-    //   process.platform === "win32"
-    //     ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    //     : "/usr/bin/chromium",
+    ...(isProduction
+      ? {}
+      : { executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",})
+  
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
@@ -104,6 +103,7 @@ export const pdfFileNew = async ({
       "--disable-gpu",
       "--single-process",
     ],
+    userDataDir: path.join(os.tmpdir(), "puppeteer-profile"),
     timeout: 0,
   });
 
