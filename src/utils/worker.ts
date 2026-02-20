@@ -11,9 +11,9 @@ import mongoose from "mongoose";
 import { cartModel } from "../models/cart.model";
 import { userModel } from "../models/user.model";
 import { productModel } from "../models/product.model";
-import { sendPdf } from "./nodemailerPdf";
-import { redis } from "../config/redis.config";
+import { sendPdf } from "./resendMailPdf";
 import express, { Request, Response } from "express";
+import { connection } from "../config/redis.config";
 
 // mongoose.connect(process.env.MONGO_DB_URI as string);
 
@@ -117,7 +117,7 @@ const startWorker = async () => {
         });
       },
       {
-        connection: redis,
+        connection,
       },
     );
 
