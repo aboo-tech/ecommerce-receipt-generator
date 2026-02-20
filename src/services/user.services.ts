@@ -4,7 +4,6 @@ import { customerModel } from "../models/customer.model";
 import { storeModel } from "../models/store.model";
 import { userModel } from "../models/user.model";
 import bcrypt from "bcrypt";
-import { sendMail } from "../utils/nodemailer";
 import { otpTemplate } from "../utils/otpTemp";
 import crypto from "crypto";
 import { otpModel } from "../models/otp.model";
@@ -15,6 +14,7 @@ import { jwt_exp, jwt_secret } from "../config/system.variable";
 import { receiptModel } from "../models/receipt.model";
 import { Types } from "mongoose";
 import { cartModel } from "../models/cart.model";
+import { sendEmail } from "../utils/resendMailer";
 
 export class UserService {
   static preRegister = async (user: IPreRegister) => {
@@ -76,7 +76,7 @@ export class UserService {
       throw newCustomError("OTP generation failed", 400);
     }
     // send otp via mail
-    sendMail(
+    sendEmail(
       {
         email: user.email,
         subject: "OTP VERIFICATION",
@@ -145,7 +145,7 @@ export class UserService {
     let jwtkey = Jwt.sign(payload, jwt_secret, { expiresIn: jwt_exp as any });
     if (!jwtkey) throw newCustomError("Unable to Login at this moment", 401);
     //send mail
-    sendMail(
+    sendEmail(
       {
         email: email,
         subject: "Login Attempt",

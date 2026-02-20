@@ -13,3 +13,5 @@ export const api_key = process.env.API_KEY;
 export const api_secret = process.env.API_SECRET;
 export const redis_url = process.env.REDIS_URL as string;
 export const chrome_path = process.env.CHROME_PATH as string;
+export const resend_api_key = process.env.RESEND_API_KEY as string;
+export const resend_email = process.env.RESEND_EMAIL as string;

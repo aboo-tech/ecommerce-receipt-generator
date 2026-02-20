@@ -1,16 +1,7 @@
-import { application } from "express";
-import nodemailer from "nodemailer";
-import { admin_email, app_password } from "../config/system.variable";
-let configOptions = {
-  host: "1.2.3.4",
-  port: 465,
-  secure: true,
-  tls: {
-    // must provide server name, otherwise TLS certificate check will fail
-    servername: "example.com",
-  },
-};
+import { Resend } from "resend";
+import { resend_api_key, resend_email } from "../config/system.variable";
 
+const resend = new Resend(resend_api_key);
 type Address = {
   label?: string | null;
   street?: string | null;
@@ -36,20 +27,8 @@ export const sendPdf = async (
   attachmentBuffer?: Buffer,
 ) => {
   try {
-    const sender = admin_email;
-    const transporter = nodemailer.createTransport({
-      host: sender,
-      //   port: 587,
-      service: "gmail",
-      secure: true,
-      auth: {
-        user: sender,
-        pass: app_password,
-      },
-    });
-
-    const message = {
-      from: sender,
+    const response = await resend.emails.send({
+      from: resend_email,
       to: data.email,
       subject: data.subject,
       html: `
@@ -120,9 +99,9 @@ export const sendPdf = async (
             },
           ]
         : [],
-    };
+    });
 
-    await transporter.sendMail(message);
+    console.log("email sent");
   } catch (error) {
     console.log(error);
   }

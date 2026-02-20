@@ -36,6 +36,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.4",
     "nodemailer": "^7.0.12",
-    "puppeteer": "^24.37.1"
+    "puppeteer": "^24.37.1",
+    "resend": "^6.9.2"
   }
 }
