@@ -4,7 +4,7 @@
   "main": "app.ts",
   "scripts": {
     "build": "tsc && copyfiles -u 1 src/**/*.hbs dist",
-    "start": "npm run build && cross-env NODE_ENV=production node dist/app.js",
+    "start": "cross-env NODE_ENV=production node dist/app.js",
     "worker": "cross-env NODE_ENV=production node dist/utils/worker.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/app.ts",
     "worker:dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/utils/worker.ts"
