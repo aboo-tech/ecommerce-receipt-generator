@@ -16,6 +16,7 @@ exports.receiptQueue = exports.mongoConnection = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const system_variable_1 = require("./system.variable");
 const bullmq_1 = require("bullmq");
+// import { redis } from "../config/redis.config";
 const redis_config_1 = require("../config/redis.config");
 mongoose_1.default.connection.on("connecting", () => {
     console.log("🟡 Connecting to MongoDB...");
@@ -42,5 +43,5 @@ const mongoConnection = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.mongoConnection = mongoConnection;
 // queues/receipt.queue.ts
 exports.receiptQueue = new bullmq_1.Queue("receipt-queue", {
-    connection: redis_config_1.redis,
+    connection: redis_config_1.connection,
 });

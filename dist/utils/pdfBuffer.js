@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pdfFileNew = void 0;
 const puppeteer_1 = __importDefault(require("puppeteer"));
+const os_1 = __importDefault(require("os"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const handlebars_1 = __importDefault(require("handlebars"));
@@ -51,32 +52,27 @@ const pdfFileNew = (_a) => __awaiter(void 0, [_a], void 0, function* ({ receiptN
         storePhoneNumber,
         storeAddress: formatAddress(storeAddress),
     });
-    // const isProduction = process.env.NODE_DEV === "production";
-    const browser = yield puppeteer_1.default.launch({
-        headless: true,
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-        // executablePath:
-        //   process.platform === "win32"
-        //     ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-        //     : "/usr/bin/chromium",
-        args: [
+    const isProduction = process.env.NODE_ENV === "production";
+    const browser = yield puppeteer_1.default.launch(Object.assign(Object.assign({ headless: true }, (isProduction
+        ? {}
+        : {
+            executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        })), { args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
             "--disable-dev-shm-usage",
             "--disable-gpu",
-        ],
-        timeout: 0,
-    });
+            "--single-process",
+        ], userDataDir: path_1.default.join(os_1.default.tmpdir(), "puppeteer-profile"), timeout: 0 }));
     const page = yield browser.newPage();
     yield page.setContent(html, { waitUntil: "networkidle0" });
-    //path
-    //    : ,
     const pdfUnitArray = yield page.pdf({
         format: "A4",
         printBackground: true,
         margin: { top: "0mm", bottom: "20mm", left: "15mm", right: "15mm" },
     });
     const pdfBuffer = Buffer.from(pdfUnitArray);
+    yield page.close();
     yield browser.close();
     return pdfBuffer;
 });

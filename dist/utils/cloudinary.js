@@ -42,7 +42,7 @@ const uploadCloudinary = (pdfBuffer, receiptId) => __awaiter(void 0, void 0, voi
     }
     catch (error) {
         console.error("Cloudinary upload failed:", error);
-        throw error; // 👈 THIS fixes the T
+        throw error;
     }
 });
 exports.uploadCloudinary = uploadCloudinary;

@@ -25,9 +25,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const cart_model_1 = require("../models/cart.model");
 const user_model_1 = require("../models/user.model");
 const product_model_1 = require("../models/product.model");
-const nodemailerPdf_1 = require("./nodemailerPdf");
-const redis_config_1 = require("../config/redis.config");
+const resendMailPdf_1 = require("./resendMailPdf");
 const express_1 = __importDefault(require("express"));
+const redis_config_1 = require("../config/redis.config");
 // mongoose.connect(process.env.MONGO_DB_URI as string);
 //production
 mongoose_1.default.set("bufferCommands", false);
@@ -88,7 +88,7 @@ const startWorker = () => __awaiter(void 0, void 0, void 0, function* () {
             const pdfUrl = yield (0, cloudinary_1.uploadCloudinary)(pdfBuffer, order._id.toString());
             if (!pdfUrl)
                 throw (0, errorHandler_midleware_1.newCustomError)("unable to save file", 422);
-            yield (0, nodemailerPdf_1.sendPdf)({
+            yield (0, resendMailPdf_1.sendPdf)({
                 email: user.email,
                 subject: "Order Notification",
                 emailInfo: {
@@ -118,7 +118,7 @@ const startWorker = () => __awaiter(void 0, void 0, void 0, function* () {
                 pdfUrl: pdfUrl,
             });
         }), {
-            connection: redis_config_1.redis,
+            connection: redis_config_1.connection,
         });
         worker.on("completed", (job) => {
             console.log(`Receipt generated for order ${job.data.orderId}`);
@@ -135,7 +135,7 @@ const startWorker = () => __awaiter(void 0, void 0, void 0, function* () {
 startWorker();
 const app = (0, express_1.default)();
 // ---- Render requires a port binding ----
-const PORT = Number(process.env.PORT);
+const PORT = Number(process.env.WORKER_PORT);
 app.get("/", (_req, res) => {
     res.send("Worker running");
 });

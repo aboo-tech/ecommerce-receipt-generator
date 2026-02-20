@@ -19,7 +19,6 @@ const customer_model_1 = require("../models/customer.model");
 const store_model_1 = require("../models/store.model");
 const user_model_1 = require("../models/user.model");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const nodemailer_1 = require("../utils/nodemailer");
 const otpTemp_1 = require("../utils/otpTemp");
 const crypto_1 = __importDefault(require("crypto"));
 const otp_model_1 = require("../models/otp.model");
@@ -28,6 +27,7 @@ const user_validate_1 = require("../validators/user.validate");
 const loginTemp_1 = require("../utils/loginTemp");
 const system_variable_1 = require("../config/system.variable");
 const receipt_model_1 = require("../models/receipt.model");
+const resendMailer_1 = require("../utils/resendMailer");
 class UserService {
 }
 exports.UserService = UserService;
@@ -76,7 +76,7 @@ UserService.preRegister = (user) => __awaiter(void 0, void 0, void 0, function* 
         throw (0, errorHandler_midleware_1.newCustomError)("OTP generation failed", 400);
     }
     // send otp via mail
-    (0, nodemailer_1.sendMail)({
+    (0, resendMailer_1.sendEmail)({
         email: user.email,
         subject: "OTP VERIFICATION",
         emailInfo: {
@@ -133,7 +133,7 @@ UserService.login = (email, password) => __awaiter(void 0, void 0, void 0, funct
     if (!jwtkey)
         throw (0, errorHandler_midleware_1.newCustomError)("Unable to Login at this moment", 401);
     //send mail
-    (0, nodemailer_1.sendMail)({
+    (0, resendMailer_1.sendEmail)({
         email: email,
         subject: "Login Attempt",
         emailInfo: {

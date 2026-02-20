@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.chrome_path = exports.redis_url = exports.api_secret = exports.api_key = exports.cloud_name = exports.app_password = exports.redis_port = exports.redis_host = exports.admin_jwt_secret = exports.jwt_exp = exports.jwt_secret = exports.admin_email = exports.mongo_db_uri = exports.dbUri = exports.PORT = void 0;
+exports.resend_email = exports.resend_api_key = exports.chrome_path = exports.redis_url = exports.api_secret = exports.api_key = exports.cloud_name = exports.app_password = exports.redis_port = exports.redis_host = exports.admin_jwt_secret = exports.jwt_exp = exports.jwt_secret = exports.admin_email = exports.mongo_db_uri = exports.dbUri = exports.PORT = void 0;
 exports.PORT = process.env.PORT;
 exports.dbUri = process.env.DB_CONNECTION_URI;
 exports.mongo_db_uri = process.env.MONGO_DB_URI;
@@ -16,3 +16,5 @@ exports.api_key = process.env.API_KEY;
 exports.api_secret = process.env.API_SECRET;
 exports.redis_url = process.env.REDIS_URL;
 exports.chrome_path = process.env.CHROME_PATH;
+exports.resend_api_key = process.env.RESEND_API_KEY;
+exports.resend_email = process.env.RESEND_EMAIL;
